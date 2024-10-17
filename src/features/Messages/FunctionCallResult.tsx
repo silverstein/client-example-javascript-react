@@ -8,11 +8,9 @@ export default function FunctionCallResult({
   message,
 }: FunctionCallResultMessageProps) {
   return (
-    <div
-      className={`flex w-4/5 text-sm mb-4 justify-end text-[#1a0400] font-medium mx-auto`}
-    >
-      <div className={`p-3 rounded-xl bg-green-100 mx-auto`}>
-        <p className="leading-relaxed">{message.functionCallResult.result}</p>
+    <div className="flex justify-center">
+      <div className="max-w-[80%] p-3 rounded-lg bg-green-100 text-green-800">
+        <p className="text-sm">{message.functionCallResult.result}</p>
       </div>
     </div>
   );

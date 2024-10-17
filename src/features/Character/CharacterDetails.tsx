@@ -1,7 +1,9 @@
 import { Message, MessageTypeEnum } from "@/lib/types/conversation.type";
 import { Check, Pencil, X } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, ChangeEvent } from "react";
 import { vapi } from "../Assistant";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function CharacterDetails() {
   const [characterDetails, setCharacterDetails] = React.useState<
@@ -34,7 +36,7 @@ function CharacterDetails() {
     setEditValue(characterDetails[key]);
   };
 
-  const handleEditChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleEditChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEditValue(event.target.value);
   };
 
@@ -59,37 +61,33 @@ function CharacterDetails() {
   return (
     <>
       {Object.keys(characterDetails).map((key: string) => (
-        <div className="flex flex-row gap-2 justify-between w-full" key={key}>
-          <h1 className="font-bold capitalize">{key}</h1>
-          <div className="flex">
+        <div className="flex flex-row gap-2 justify-between w-full items-center" key={key}>
+          <h3 className="font-semibold capitalize">{key}</h3>
+          <div className="flex items-center">
             {editKey === key ? (
-              <textarea
+              <Input
                 value={editValue}
-                className="border-0 h-auto focus-visible:ring-0 focus-visible:outline-none"
                 onChange={handleEditChange}
+                className="h-8 w-40"
               />
             ) : (
-              <div className="transition text-right ">
+              <div className="transition text-right w-40 truncate">
                 {characterDetails[key]}
               </div>
             )}
             {editKey === key ? (
-              <div className="right-0 top-0 flex">
-                <button onClick={handleCancel} className="py-1">
-                  <X size={16} className="font-bold text-red-500" />
-                </button>
-                <button className="py-1">
-                  <Check
-                    size={16}
-                    onClick={handleSave}
-                    className="font-bold text-green-500"
-                  />
-                </button>
+              <div className="flex ml-2">
+                <Button variant="ghost" size="icon" onClick={handleCancel}>
+                  <X className="h-4 w-4 text-red-500" />
+                </Button>
+                <Button variant="ghost" size="icon" onClick={handleSave}>
+                  <Check className="h-4 w-4 text-green-500" />
+                </Button>
               </div>
             ) : (
-              <button className="p-1" onClick={() => handleEdit(key)}>
-                <Pencil size={16} className="font-bold text-blue-500" />
-              </button>
+              <Button variant="ghost" size="icon" onClick={() => handleEdit(key)}>
+                <Pencil className="h-4 w-4 text-blue-500" />
+              </Button>
             )}
           </div>
         </div>

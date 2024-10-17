@@ -12,9 +12,8 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, activeTranscript }: MessageListProps) {
-  console.log("messages", messages);
   return (
-    <>
+    <div className="space-y-4">
       {messages.map((message, index) =>
         message.type === MessageTypeEnum.TRANSCRIPT ? (
           <ConversationMessage
@@ -25,9 +24,9 @@ export function MessageList({ messages, activeTranscript }: MessageListProps) {
           <FunctionCallResult key={message.type + index} message={message} />
         ) : null
       )}
-      {activeTranscript ? (
+      {activeTranscript && (
         <ConversationMessage message={activeTranscript} />
-      ) : null}
-    </>
+      )}
+    </div>
   );
 }

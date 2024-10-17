@@ -2,27 +2,38 @@ import {
   MessageRoleEnum,
   TranscriptMessage,
 } from "@/lib/types/conversation.type";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface ConversationMessageProps {
   message: TranscriptMessage;
 }
 
 export function ConversationMessage({ message }: ConversationMessageProps) {
+  const isUser = message.role === MessageRoleEnum.USER;
+
   return (
-    <div
-      className={`flex w-4/5 text-sm mb-4 justify-end text-[#1a0400] font-medium ${
-        message.role == MessageRoleEnum.USER ? "ml-auto" : "mr-auto"
-      }`}
-    >
+    <div className={`flex items-end space-x-2 ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+      {!isUser && (
+        <Avatar>
+          <AvatarImage src="/bot-avatar.png" alt="AI" />
+          <AvatarFallback>AI</AvatarFallback>
+        </Avatar>
+      )}
       <div
-        className={`p-3 ${
-          message.role !== MessageRoleEnum.USER
-            ? "rounded-r-xl bg-blue-200 mr-auto"
-            : "rounded-l-xl bg-orange-100 ml-auto"
-        } rounded-t-xl`}
+        className={`max-w-[80%] p-3 rounded-2xl ${
+          isUser
+            ? 'bg-blue-500 text-white rounded-br-none'
+            : 'bg-gray-200 text-gray-800 rounded-bl-none'
+        }`}
       >
-        <p className="leading-relaxed">{message.transcript}</p>
+        <p className="text-sm">{message.transcript}</p>
       </div>
+      {isUser && (
+        <Avatar>
+          <AvatarImage src="/user-avatar.png" alt="User" />
+          <AvatarFallback>U</AvatarFallback>
+        </Avatar>
+      )}
     </div>
   );
 }
